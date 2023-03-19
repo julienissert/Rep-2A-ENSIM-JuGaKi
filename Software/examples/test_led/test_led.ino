@@ -3,7 +3,7 @@ const int IR_LED_PIN = 13; // numéro de la pin de la diode infrarouge
 
 void allumer_diode_infrarouge() {
   digitalWrite(IR_LED_PIN, HIGH); // allume la diode infrarouge
-  delay(2000); // attend 2 secondes
+  delay(1000); // attend 2 secondes
   digitalWrite(IR_LED_PIN, LOW); // éteint la diode infrarouge
 }
 
