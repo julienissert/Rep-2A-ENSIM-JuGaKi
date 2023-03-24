@@ -16,3 +16,18 @@ void loop()
 
 
 // ON a pas réussi à faire vraiment fonctionner l'HP, il y avait des problèmes à l'ENSIM, CF : https://www.youtube.com/watch?v=m1HEwgHSBrs&t=59s pour détails.
+
+
+// Son tir : https://audiojungle.net/item/powerful-laser-gun-6/42276305
+
+// Son démarage qd bouton (à voir si pas trop énervant) : https://www.youtube.com/watch?v=B14L61fYZlc
+
+// Son explosion 1&2 : https://www.youtube.com/watch?v=tUnqywnKpvU
+
+// Dernière explosion : https://www.youtube.com/watch?v=n2Ll69wk80M
+
+// + Message de fin par exemple : voiture bleue tu as perdu, bravo à toi pilote de la voiture rouge (et vice versa)
+
+// Son qui annonce le rechargement (nous qui gueulons : RECHARGE ! 
+
+// Décompte de 3 s avant la fin de la recharge.
