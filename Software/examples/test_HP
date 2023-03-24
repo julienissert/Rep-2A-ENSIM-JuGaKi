@@ -1,0 +1,18 @@
+#include <PCM.h>
+
+const unsigned char sample[] PROGMEM = {
+  
+
+};
+
+void setup()
+{
+  startPlayback(sample, sizeof(sample));
+}
+
+void loop()
+{
+}
+
+
+// ON a pas réussi à faire vraiment fonctionner l'HP, il y avait des problèmes à l'ENSIM, CF : https://www.youtube.com/watch?v=m1HEwgHSBrs&t=59s pour détails.
