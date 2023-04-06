@@ -1,73 +1,69 @@
-#include <Arduino.h>
-#include <AsyncDelay.h>
+// définition des pins du pont en H L298N
+int IN1 = 7;
+int IN2 = 8;
+int IN3 = 6;
+int IN4 = 5;
 
-const int motor1Pin1 = 5;
-const int motor1Pin2 = 6;
-const int motor2Pin1 = 10;
-const int motor2Pin2 = 11;
-const int joystickPinX = A0;
-const int joystickPinY = A1;
-
-AsyncDelay loopDelay(50);
+// définition des pins du joystick
+int joyX = A0;
+int joyY = A1;
 
 void setup() {
-  pinMode(motor1Pin1, OUTPUT);
-  pinMode(motor1Pin2, OUTPUT);
-  pinMode(motor2Pin1, OUTPUT);
-  pinMode(motor2Pin2, OUTPUT);
-  Serial.begin(9600);
-}
-
-void mouvement_tank() {
-  int x = analogRead(joystickPinX);
-  int y = analogRead(joystickPinY);
-
-  int speedLeft = 0;
-  int speedRight = 0;
-
-  if (x > 530) {
-    speedLeft = map(x, 530, 1023, 0, 255);
-    speedRight = map(x, 530, 1023, 0, 255);
-  } else if (x < 490) {
-    speedLeft = map(x, 0, 490, -255, 0);
-    speedRight = map(x, 0, 490, -255, 0);
-  }
-
-  if (y < 490) {
-    int delta = map(y, 0, 490, 0, 255);
-    speedLeft -= delta;
-  } else if (y > 530) {
-    int delta = map(y, 530, 1023, 0, 255);
-    speedRight -= delta;
-  }
-
-  speedLeft = constrain(speedLeft, -255, 255);
-  speedRight = constrain(speedRight, -255, 255);
-
-  if (speedLeft < 0) {
-    digitalWrite(motor1Pin1, LOW);
-    analogWrite(motor1Pin2, abs(speedLeft));
-  } else {
-    digitalWrite(motor1Pin2, LOW);
-    analogWrite(motor1Pin1, speedLeft);
-  }
-
-  if (speedRight < 0) {
-    digitalWrite(motor2Pin1, LOW);
-    analogWrite(motor2Pin2, abs(speedRight));
-  } else {
-    digitalWrite(motor2Pin2, LOW);
-    analogWrite(motor2Pin1, speedRight);
-  }
-
-  Serial.print("Speed Left: ");
-  Serial.print(speedLeft);
-  Serial.print(", Speed Right: ");
-  Serial.println(speedRight);
+  // définition des pins en sortie
+  pinMode(IN1, OUTPUT);
+  pinMode(IN2, OUTPUT);
+  pinMode(IN3, OUTPUT);
+  pinMode(IN4, OUTPUT);
 }
 
 void loop() {
-  if (loopDelay.asyncDelay(AsyncDelay::MILLISECOND)) {
-    mouvement_tank();
-  }
+
+  // lecture de la position du joystick
+  int x = analogRead(joyX);
+  int y = analogRead(joyY);
+  
+  // calcul de la vitesse et du sens des moteurs
+  int speed = map(x, 0, 1023, -25, 25);
+  int dir = map(y, 0, 1023, 255, 255);
+   if (speed>=0) { // avancer
+   
+   if (dir<0){ 
+   
+  // faire tourner les moteurs en avant à vitesse moyenne
+  digitalWrite(IN1, speed*(1/(dir+1)));
+  digitalWrite(IN2, LOW);
+  digitalWrite(IN3, LOW);
+  digitalWrite(IN4, speed);
+ }
+
+   if (dir>=0){ 
+   
+  // faire tourner les moteurs en avant à vitesse moyenne
+  digitalWrite(IN1, speed);
+  digitalWrite(IN2, LOW);
+  digitalWrite(IN3, LOW);
+  digitalWrite(IN4, speed*(dir+1));
+ }
+ 
+ }
+if (speed<0) { // avancer
+      
+   
+  // faire tourner les moteurs en avant à vitesse moyenne
+  digitalWrite(IN1, LOW);
+  digitalWrite(IN2, speed);
+  digitalWrite(IN3, speed);
+  digitalWrite(IN4, LOW);
+ }
+//if (speed==0) { // avancer
+      
+   
+  // faire tourner les moteurs en avant à vitesse moyenne
+  //digitalWrite(IN1, LOW);
+  //digitalWrite(IN2, LOW);
+  //digitalWrite(IN3, LOW);
+  //digitalWrite(IN4, LOW);
+ //}
+ 
+  delay(10); // attendre
 }
