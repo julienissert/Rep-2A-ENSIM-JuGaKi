@@ -14,56 +14,39 @@ void setup() {
   pinMode(IN2, OUTPUT);
   pinMode(IN3, OUTPUT);
   pinMode(IN4, OUTPUT);
+  Serial.begin(9600);
 }
 
 void loop() {
-
   // lecture de la position du joystick
   int x = analogRead(joyX);
   int y = analogRead(joyY);
   
   // calcul de la vitesse et du sens des moteurs
-  int speed = map(x, 0, 1023, -25, 25);
-  int dir = map(y, 0, 1023, 255, 255);
-   if (speed>=0) { // avancer
-   
-   if (dir<0){ 
-   
-  // faire tourner les moteurs en avant à vitesse moyenne
-  digitalWrite(IN1, speed*(1/(dir+1)));
-  digitalWrite(IN2, LOW);
-  digitalWrite(IN3, LOW);
-  digitalWrite(IN4, speed);
- }
+  int speed = map(x, 0, 1023, 0, 255);
+  int dir = map(y, 0, 1023, 0, 255);
 
-   if (dir>=0){ 
-   
-  // faire tourner les moteurs en avant à vitesse moyenne
-  digitalWrite(IN1, speed);
-  digitalWrite(IN2, LOW);
-  digitalWrite(IN3, LOW);
-  digitalWrite(IN4, speed*(dir+1));
- }
- 
- }
-if (speed<0) { // avancer
-      
-   
-  // faire tourner les moteurs en avant à vitesse moyenne
-  digitalWrite(IN1, LOW);
-  digitalWrite(IN2, speed);
-  digitalWrite(IN3, speed);
-  digitalWrite(IN4, LOW);
- }
-//if (speed==0) { // avancer
-      
-   
-  // faire tourner les moteurs en avant à vitesse moyenne
-  //digitalWrite(IN1, LOW);
-  //digitalWrite(IN2, LOW);
-  //digitalWrite(IN3, LOW);
-  //digitalWrite(IN4, LOW);
- //}
- 
-  delay(10); // attendre
+  Serial.print("speed: ");
+  Serial.println(speed);
+
+  // phase neutre
+  if (4 > speed > -4) { // neutre
+    analogWrite(IN1, LOW);
+    analogWrite(IN2, LOW);
+    analogWrite(IN3, LOW);
+    analogWrite(IN4, LOW);
+  } else if ( speed < -5) { // reculer
+    analogWrite(IN1, 0);
+    analogWrite(IN2, (-speed));
+    analogWrite(IN3, 0);
+    analogWrite(IN4, -speed);
+  } else if (speed > 5) { // avancer
+    digitalWrite(IN1, speed);
+    digitalWrite(IN2, 0);
+    digitalWrite(IN3, speed);
+    digitalWrite(IN4, 0);
+  }
+
+  // attendre un court moment avant la prochaine lecture du joystick
+  delay(10);
 }
