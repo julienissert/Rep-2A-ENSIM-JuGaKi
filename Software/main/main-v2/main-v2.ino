@@ -99,6 +99,54 @@ void setup () {
 
 }
 
+
+
+void loop() {
+  
+  //calcul timer rearmement
+  if (rearmement_bool) {
+    pattern_vibration2 = true;
+    rearmement_elapsed_time = millis() - rearmement_start_time;
+    if (rearmement_elapsed_time>= rearmement_time){
+      rearmement_bool = false;
+      }
+    }
+  
+  //calcul timer recuperation
+  if (recuperation_bool) {
+    pattern_vibration3 = true;
+    recuperation_elapsed_time = millis() - recuperation_start_time;
+    if (recuperation_elapsed_time>= recuperation_time){
+      recuperation_bool = false;
+      }
+    }
+    
+  //calcul timer rechargement
+  if (munitionsoff_bool) {
+    pattern_vibration1 = true;
+    munitionsoff_elapsed_time = millis() - munitionsoff_start_time;
+    if (munitionsoff_elapsed_time>= recuperation_time){
+      munitionsoff_bool = false;
+      }
+    }
+
+
+pattern_servo();
+pattern_lcd();
+led_IR();
+move_servos();
+move_motors();
+screen();
+reset_button();
+sensor_IR();
+vibration();
+
+
+}
+
+
+//FUNCTIONS
+
 void pattern_servo() {
   if (tutorial_bool) {
   int count = 0;
@@ -396,35 +444,4 @@ void vibration() {
       }
     }
   }  
-}
-
-
-void loop() {
-  
-  //calcul timer rearmement
-  if (rearmement_bool) {
-    pattern_vibration2 = true;
-    rearmement_elapsed_time = millis() - rearmement_start_time;
-    if (rearmement_elapsed_time>= rearmement_time){
-      rearmement_bool = false;
-      }
-    }
-  
-  //calcul timer recuperation
-  if (recuperation_bool) {
-    pattern_vibration3 = true;
-    recuperation_elapsed_time = millis() - recuperation_start_time;
-    if (recuperation_elapsed_time>= recuperation_time){
-      recuperation_bool = false;
-      }
-    }
-    
-  //calcul timer rechargement
-  if (munitionsoff_bool) {
-    pattern_vibration1 = true;
-    munitionsoff_elapsed_time = millis() - munitionsoff_start_time;
-    if (munitionsoff_elapsed_time>= recuperation_time){
-      munitionsoff_bool = false;
-      }
-    }
 }
