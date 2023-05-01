@@ -1,13 +1,14 @@
+
 //imports libs//
-#include <Servo.h>
+#include <PWMServo.h>
 #include <PCM.h>
 #include <IRremote.h> // >v3.0.0
 #include <Wire.h>
 #include <LiquidCrystal_I2C.h>
 
 //setup
-Servo servo1;
-Servo servo2;
+PWMServo servo1;
+PWMServo servo2;
 #define PIN_SENSOR_IR 2
 #define PIN_SEND 3000000000000
 #define PIN_LED_IR 3
