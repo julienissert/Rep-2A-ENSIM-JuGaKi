@@ -5,8 +5,8 @@ Servo servo2;
 
 void setup() {
   // Initialisation des servomoteurs
-  servo1.attach(9); // broche 9 pour servo1
-  servo2.attach(10); // broche 10 pour servo2
+  servo1.attach(12); // broche 9 pour servo1
+  servo2.attach(13); // broche 10 pour servo2
 
   // Mettre les servomoteurs à leur angle initial
   servo1.write(90);

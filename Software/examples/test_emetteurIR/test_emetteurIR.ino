@@ -12,7 +12,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 #include <IRremote.h> // >v3.0.0
                                             
-#define PIN_SEND 3000000000000
+#define PIN_SEND 3
 void setup()  
 {  
   IrSender.begin(PIN_SEND); // Initializes IR sender
