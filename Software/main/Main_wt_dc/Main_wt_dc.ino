@@ -34,7 +34,7 @@ LiquidCrystal_I2C LCD(0x27,16,2); // définit le type d'écran lcd 16 x 2
 bool game_bool = false;
 int game_time = 180000; 
 int game_start_time;
-int game_elapsed_time = 0;
+int game_elapsed_time;
 
 // gestion resultats
 bool results_bool = false;
@@ -159,51 +159,4 @@ void loop() {
   LCD.setCursor(7, 0);
   LCD.print(game_elapsed_time);
   LCD.display();
-
-// Gestion receveur IR
-  if (IrReceiver.decode()) {
-    if (!game_bool) {
-    Serial.println("Received something...");    
-    IrReceiver.printIRResultShort(&Serial); // Prints a summary of the received data
-    Serial.println("Début timer");
-    game_bool = true;
-    game_start_time = millis();
-    IrReceiver.resume(); // Important, enables to receive the next IR signal 
-  } }
-
-    //calcul timer partie
-  if (game_bool) {
-    game_elapsed_time = millis() - game_start_time;
-    if (game_elapsed_time>= game_time){
-      game_bool = false;
-      results_bool = true;
-      }
-
-    /*/ gestion resultats 
-    if (results_bool) {
-  Serial.println("Debut results");
-
-  LCD.clear();
- LCD.setCursor(3, 0);
- LCD.print("FIN DE PARTIE:");
-
-  if (IrReceiver.decode()) {
-    Serial.println("Received something...");    
-    IrReceiver.printIRResultShort(&Serial); // Prints a summary of the received data
-    LCD.setCursor(0,1);
-    LCD.print("TU ES VAINQUEUR");
-    IrReceiver.resume(); // Important, enables to receive the next IR signal
-    delay(5000);
-    LCD.clear();
-  } 
-  else {
-       LCD.setCursor(0,1);
-    LCD.print("TU ES PERDANT");
-    IrReceiver.resume(); // Important, enables to receive the next IR signal
-    delay(5000);
-    LCD.clear();
-    }
-  
-}
-  } /*/
 }
