@@ -9,6 +9,7 @@
 Servo servo1;
 Servo servo2;
 #define PIN_SENSOR_IR 2
+#define PIN_SENSOR_LUM A3
 #define PIN_LED_IR 3
 #define PIN_SERVO_1 12
 #define PIN_SERVO_2 7
@@ -151,7 +152,7 @@ void setup () {
   // gestion synchonisation timer
   //game_connexion_bool = true; // PHASE DE TEST
   while(!game_connexion_bool){
-  lum_nb = analogRead(PIN_SENSOR_IR);
+  lum_nb = analogRead(PIN_SENSOR_LUM);
   if(lum_nb >= lum_delta){
   Serial.println("Synchro trouvée"); 
  
@@ -204,7 +205,7 @@ void loop() {
   // gestion cible
 
   while (game_elapsed_time < game_time) {
-  lum_nb = analogRead(PIN_SENSOR_IR);
+  lum_nb = analogRead(PIN_SENSOR_LUM);
   if(lum_nb >= lum_delta){
   vies_nb = vies_nb-1;
   delay(3000);
