@@ -195,6 +195,10 @@ void loop() {
   LCD.print("Temps: ");
   LCD.setCursor(7, 0);
   LCD.print(game_elapsed_time);
+  LCD.setCursor(1,1);
+  LCD.print("Vies: ");
+  LCD.setCursor(7,1);
+  LCD.print(vies_nb);
   LCD.display();
   Serial.println(game_elapsed_time);
 
