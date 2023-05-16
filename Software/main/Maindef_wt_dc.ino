@@ -35,7 +35,7 @@ int game_elapsed_time;
 
 // gestion resultats
 bool results_bool = false;
-bool game_connexion_bool = true;
+bool game_connexion_bool = false;
 int lum_nb;
 int lum_delta = 900;
 int bcl_em = 0;
