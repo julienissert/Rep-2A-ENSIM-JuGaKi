@@ -156,7 +156,7 @@ void setup () {
   if(lum_nb >= lum_delta){
   Serial.println("Synchro trouvée"); 
  
-  while (bcl_em < 10 ) {
+  while (bcl_em < 100 ) {
   IrSender.sendNEC(0x0102, 0x34, true, 0);
   bcl_em = bcl_em+1;
   delay(10);
