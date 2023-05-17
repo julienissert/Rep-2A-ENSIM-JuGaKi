@@ -1,68 +1,76 @@
-// définition des broches du pont en H L298N
-int IN1 = 7; //rouge sans scotch
-int IN2 = 8; //noir sans scotch
-int IN3 = 6; //jaune
-int IN4 = 5; //vert
+// Définition des pins du pont en H L298N
+const int IN1 = 7; // Rouge sans scotch R
+const int IN2 = 8; // Noir sans scotch R
+const int IN3 = 6; // Jaune L
+const int IN4 = 5; // Vert L
 
-// définition des broches du joystick
-int joyX = A0;
-int joyY = A1;
+// Définition des pins du joystick
+const int joyX = A0;
+const int joyY = A1;
 
 void setup() {
-  // définition des broches en sortie
+  // Définition des pins en sortie
   pinMode(IN1, OUTPUT);
   pinMode(IN2, OUTPUT);
   pinMode(IN3, OUTPUT);
   pinMode(IN4, OUTPUT);
-  Serial.begin(9600);
+  
+  Serial.begin(9600); // Initialisation de la communication série
 }
 
 void loop() {
-  // lecture de la position du joystick
+  // Lecture de la position du joystick
   int x = analogRead(joyX);
   int y = analogRead(joyY);
+  
+  // Calcul de la vitesse et du sens des moteurs
+  // int speed = map(x, 0, 1023, -255, 255);
+  // int dir = map(y, 0, 1023, -20, 20);
+  // int 200 = 100;
 
-  // calcul de la vitesse et de la direction des moteurs
-  int speed = map(x, 0, 1023, -255, 255);
-  int dir = map(y, 0, 1023, -20, 20);
+  // Affichage des valeurs sur le moniteur série
+  // Serial.print("speed: ");
+  // Serial.println(speed);
+  // Serial.print("dir: ");
+  // Serial.println(dir);
 
-  //Serial.print("speed: ");
-  //Serial.println(speed);
-  Serial.print("dir: ");
-  Serial.println(dir);
-
-  // contrôle des moteurs en fonction de la vitesse et de la direction
-  if (dir < -5) { // droite
-    analogWrite(IN1, 0);
-    analogWrite(IN2, 0);
-    analogWrite(IN3, speed);
-    analogWrite(IN4, 0);
-  }
-  else if (dir > 5) { // gauche
-    analogWrite(IN1, speed);
+  // Contrôle des moteurs en fonction de la vitesse et du sens
+  if (y > 730) { // Gauche
+    analogWrite(IN1, 200);
     analogWrite(IN2, 0);
     analogWrite(IN3, 0);
     analogWrite(IN4, 0);
   }
-   else if (dir > -5 && dir < 5) { // direction neutre
-    if (speed > 5) {
-      analogWrite(IN1, speed);
-      analogWrite(IN2, 0);
-      analogWrite(IN3, speed);
-      analogWrite(IN4, 0);
-    } else if (speed < -5) {
-      analogWrite(IN1, 0);
-      analogWrite(IN2, -speed);
-      analogWrite(IN3, 0);
-      analogWrite(IN4, -speed);
-    }
-  } else { // arrêter
+  else if (y < 320) { // Droite
+    analogWrite(IN1, 0);
+    analogWrite(IN2, 0);
+    analogWrite(IN3, 200);
+    analogWrite(IN4, 0);
+  }
+  else if (x > 830) { // Avant
+    analogWrite(IN1, 200);
+    analogWrite(IN2, 0);
+    analogWrite(IN3, 200);
+    analogWrite(IN4, 0);
+  }
+  else if (x < 320) { // Arrière
+    analogWrite(IN1, 0);
+    analogWrite(IN2, 200);
+    analogWrite(IN3, 0);
+    analogWrite(IN4, 200);
+  }
+  else { // Arrêt
     digitalWrite(IN1, LOW);
     digitalWrite(IN2, LOW);
     digitalWrite(IN3, LOW);
     digitalWrite(IN4, LOW);
   }
 
-  // attendre un court moment avant la prochaine lecture du joystick
+  // Attente d'un court moment avant la prochaine lecture du joystick
+  Serial.println("x :");
+  Serial.println(x);
+  Serial.println("y :");
+  Serial.println(y);
+
   delay(10);
 }
