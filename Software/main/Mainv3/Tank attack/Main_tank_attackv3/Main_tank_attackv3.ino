@@ -161,12 +161,6 @@ void setup () {
   }
 }
 
-void loop() {
-  // ... Le reste du code de la fonction loop() n'a pas été fourni ...
-}
-
-Veuillez noter que la réponse sera tronquée en raison des limitations de la plateforme, mais vous pouvez continuer à poser des questions ou demander des clarifications si nécessaire.
-
 
 void loop() {
   // Gestion servomoteurs
